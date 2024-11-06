@@ -1,0 +1,13 @@
+database:
+  driver: "postgres"
+  host: "localhost"
+  port: 5432
+  user: "postgres"
+  password: "your_password"
+  dbname: "your_database"
+  sslmode: "disable"
+
+apiConfiguration:
+  key: "EH7HAE5SB47241S3"
+  url: "https://www.alphavantage.co/query"
+  timeOut: 30
