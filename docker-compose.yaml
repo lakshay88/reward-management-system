@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: reward_management_db
+    environment:
+      POSTGRES_USER: good-user
+      POSTGRES_PASSWORD: good-password
+      POSTGRES_DB: reward_management_system
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./dbscript.sql:/docker-entrypoint-initdb.d/dbscript.sql
+
+volumes:
+  pg_data:

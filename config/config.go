@@ -14,7 +14,8 @@ type DatabaseConfig struct {
 	Port     int    `yaml:"port"`
 	User     string `yaml:"user"`
 	Password string `yaml:"password"`
-	Dbname   string `yaml:"dbname"`
+	DBName   string `yaml:"dbname"`
+	SSLMode  string `yaml:"sslmode"`
 }
 
 type RestServerConfig struct {

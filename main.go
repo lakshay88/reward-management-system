@@ -3,12 +3,16 @@ package main
 import (
 	"log"
 
-	"github.com/lakshay88/reward-managment-system/config"
-	"github.com/lakshay88/reward-managment-system/gateway"
+	"github.com/lakshay88/reward-management-system/config"
+	"github.com/lakshay88/reward-management-system/database"
+	"github.com/lakshay88/reward-management-system/gateway"
 )
 
 // Config Variable
-var cfg *config.AppConfig
+var (
+	db  database.Database
+	cfg *config.AppConfig
+)
 
 func init() {
 	// Initializing Config
@@ -19,13 +23,23 @@ func init() {
 		log.Fatalf("Failed to load configuration: %v", err)
 		return
 	}
+
+	switch cfg.Database.Driver {
+	case "postgres":
+		db, err = database.ConnectionToPostgres(cfg.Database)
+		if err != nil {
+			log.Fatalf("Failed to connect to database: %v", err)
+		}
+	}
 }
 
 func main() {
+
+	defer db.Close()
 	// Starting Gateway service
 	// Instance of Gateway
-	gate := gateway.NewGateway()
-	err := gate.RegisterGateWayService(cfg.ServerConfig)
+	gatewayInstance := gateway.NewGateway()
+	err := gatewayInstance.RegisterGateWayService(cfg, db)
 	if err != nil {
 		log.Fatalln("Wait to register routes -", err)
 		return
