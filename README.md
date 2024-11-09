@@ -26,3 +26,8 @@ Follow the steps below to set up the project locally:
 5. Start reward-expiration-schedular 
   `cd reward-expiration-schedular`
   `go run main.go` 
+
+
+# Extrat things 
+Post Man Collection added import and enjoy
+file name - `reward-managment-system.postman_collection.json`

@@ -3,11 +3,11 @@ version: '3.8'
 services:
   postgres:
     image: postgres:13
-    container_name: reward_management_db_1
+    container_name: reward_management_db
     environment:
       POSTGRES_USER: good-user
       POSTGRES_PASSWORD: good-password
-      POSTGRES_DB: reward_management_system_1
+      POSTGRES_DB: reward_management_system
     ports:
       - "5432:5432"
     volumes:
