@@ -23,18 +23,20 @@ func (r *Routers) RegisterRoutes(router *chi.Mux, cfg *config.AppConfig, db data
 	router.Post("/login", handlersInstance.LoginRequest(cfg, db))
 	router.Post("/refresh-token", handlersInstance.RefreshToken(cfg, db))
 
-	authMiddleware := auth.AuthMiddleware()
-
-	router.With(authMiddleware).Get("/user", handlersInstance.GetUserByID(cfg, db))
+	protected := chi.NewRouter()
+	protected.Use(auth.AuthMiddleware)
+	router.Get("/user", handlersInstance.GetUserByID(cfg, db))
 	// Add Transaction
-	router.With(authMiddleware).Post("/transaction/add", handlersInstance.AddTransactions(cfg, db))
+	router.Post("/transaction/add", handlersInstance.AddTransactions(cfg, db))
 
 	// Get Points balance
-	router.With(authMiddleware).Get("/points/balance", handlersInstance.PointBalance(cfg, db))
+	router.Get("/points/balance", handlersInstance.PointBalance(cfg, db))
 
 	// Redeem Point API
-	router.With(authMiddleware).Post("/points/redeem", handlersInstance.RedeemPoints(cfg, db))
+	router.Post("/points/redeem", handlersInstance.RedeemPoints(cfg, db))
 
 	// Get Point History
-	router.With(authMiddleware).Post("/points/history", handlersInstance.GetPointsHistory(cfg, db))
+	router.Post("/points/history", handlersInstance.GetPointsHistory(cfg, db))
+
+	router.Mount("/", protected)
 }

@@ -22,15 +22,26 @@ type RestServerConfig struct {
 	Port int `yaml:"port"`
 }
 
+type SchedulerConfig struct {
+	SchedulerRunnerTimeInMin int `yaml:"schedulerRunnerTimeInMin"`
+	ExpireTimeYear           int `yaml:"expireTimeYear"`
+	ExpireTimeMonth          int `yaml:"expireTimeMonth"`
+	ExpireTimeDay            int `yaml:"expireTimeDay"`
+}
+
 type AppConfig struct {
-	Database     DatabaseConfig   `yaml:"database"`
-	ServerConfig RestServerConfig `yaml:"restServerConfig"`
+	Database         DatabaseConfig   `yaml:"database"`
+	ServerConfig     RestServerConfig `yaml:"restServerConfig"`
+	SchedulerConfig  SchedulerConfig  `yaml:"schedulerConfig"`
+	JWTSecret        string           `yaml:"jwtSecret"`
+	AccessTokeTime   int              `yaml:"accessTokeTime"`
+	RefreshTokenTime int              `yaml:"refreshTokenTime"`
 }
 
 func LoadConfiguration(pathOfYaml string) (*AppConfig, error) {
 	file, err := os.Open(pathOfYaml)
 	if err != nil {
-		log.Fatalf("Failed to find yaml file")
+		log.Fatalf("Failed to find yaml file: %v", err)
 		return nil, err
 	}
 

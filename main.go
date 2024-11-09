@@ -18,7 +18,7 @@ func init() {
 	// Initializing Config
 	log.Println("Setting started, fetching configurations")
 	var err error
-	cfg, err = config.LoadConfiguration("config.yaml")
+	cfg, err = config.LoadConfiguration("./config.yaml")
 	if err != nil {
 		log.Fatalf("Failed to load configuration: %v", err)
 		return
